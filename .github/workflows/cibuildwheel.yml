@@ -66,9 +66,9 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.14
         env:
-          CIBW_ARCHS_MACOS: "x86_64"
           CIBW_ENVIRONMENT_MACOS: F77=gfortran-11 F90=gfortran-11
-
+          CIBW_SKIP: "*musllinux* pp* *_i686"
+          CIBW_BUILD_VERBOSITY: "3"
       - uses: actions/upload-artifact@v3
         with:
           path: wheelhouse/*
@@ -106,6 +106,8 @@ jobs:
         env:
           CIBW_ARCHS_MACOS: "arm64"
           CIBW_TEST_SKIP: "*-macosx_arm64"
+          CIBW_SKIP: "*musllinux* pp* *_i686"
+          CIBW_BUILD_VERBOSITY: "3"
 
       - uses: actions/upload-artifact@v3
         with:
