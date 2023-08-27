@@ -91,7 +91,7 @@ jobs:
         # support for cross-compilation to arm64 targets
         # and change environment variables for the compiler
         # to utilise them. Added by @kokroo (Shiv Kokroo)
-        uses: kokroo/cross-compile-fortran-macos@main
+        uses: kokroo/cross-compile-fortran-macos@v1
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.14
