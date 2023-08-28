@@ -2,8 +2,7 @@ name: build
 
 on:
   push:
-    branches:
-      - main
+
   pull_request:
   release:
     types:
@@ -42,11 +41,18 @@ jobs:
         with:
           platforms: arm64
 
+      - name: Setup gfortran cross-compiler for macOS
+        if: matrix.os == 'macos-latest'
+        # Here, we fetch a forked gfortran compiler with
+        # support for cross-compilation to arm64 targets
+        # and change environment variables for the compiler
+        # to utilise them. Added by @kokroo (Shiv Kokroo)
+        uses: kokroo/cross-compile-fortran-macos@v1
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.14
         env:
           CIBW_ARCHS_LINUX: auto aarch64
-          CIBW_ENVIRONMENT_MACOS: F77=gfortran-11 F90=gfortran-11
           # Skip musllinux wheels, which take a long time to build because Numpy must be built from source
           # Skip PyPy wheels
           # Skip 32-bit Intel wheels
